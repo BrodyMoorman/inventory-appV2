@@ -10,6 +10,7 @@ import Part from './pages/Part'
 import Jobs from './pages/Jobs'
 import Settings from './pages/Settings'
 import NewJob from './pages/NewJob'
+import Job from './pages/Job'
 
 import { RequireAuth } from 'react-auth-kit'
 import { Route, Routes } from 'react-router-dom'
@@ -34,6 +35,7 @@ function App() {
       <Route path="/settings" element={<RequireAuth loginPath='/login'><Settings /></RequireAuth>} ></Route>
       <Route path="/jobs/new/" element={<RequireAuth loginPath='/login'><NewJob /></RequireAuth>} />
       <Route path="/jobs/new/:templateid" element={<RequireAuth loginPath='/login'><NewJob /></RequireAuth>} />
+      <Route path="/jobs/:jobid" element={<RequireAuth loginPath='/login'><Job /></RequireAuth>} />
       
     </Routes>
     </QueryClientProvider>

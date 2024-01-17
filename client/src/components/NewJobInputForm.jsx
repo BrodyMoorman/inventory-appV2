@@ -8,6 +8,9 @@ import { useAuthUser } from 'react-auth-kit'
 import PartSearchWithResults from './PartSearchWithResults'
 import PartCardWithCount from './PartCardWithCount'
 import UserSelectList from './UserSelectList'
+import { useQuery } from 'react-query'
+import axios from 'axios'
+
 
 export default function NewJobInputForm(props) {
     const auth = useAuthUser()
@@ -66,7 +69,7 @@ export default function NewJobInputForm(props) {
         setMembers(members.filter((item) => item.userId !== member.userId))
     }
 
-    const handleCreate = () => {
+    const handleCreate  = async () => {
         const newJob = {
             jobTitle: values.jobTitle,
             completionDate: values.completionDate,
@@ -74,6 +77,15 @@ export default function NewJobInputForm(props) {
             members: members
         }
         console.log(newJob)
+        try{
+            const res = await axios.post('http://localhost:8800/api/jobs/new', newJob, {
+              withCredentials: true,
+            }) 
+            window.location.reload()
+          } catch (err) {
+            console.log(err)
+          }
+
     }
     
     useEffect(() => {
