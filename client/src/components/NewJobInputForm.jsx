@@ -101,6 +101,7 @@ export default function NewJobInputForm(props) {
     
   return (
     <VStack>
+        <Button onClick={()=>console.log(template)}></Button>
         {(template != null) && <Text>Instance of: {template.transaction_name}</Text>}
         <FormControl isRequired>
                   <FormLabel>Job Title</FormLabel>
@@ -135,7 +136,7 @@ export default function NewJobInputForm(props) {
                                 <PopoverArrow />
                                 <PopoverCloseButton />
                                 <PopoverHeader>Add Team Member</PopoverHeader>
-                                <PopoverBody><UserSelectList callback={addMember} /></PopoverBody>
+                                <PopoverBody><UserSelectList exclude={[]} callback={addMember} /></PopoverBody>
                             </PopoverContent>
                         </Popover>
                     </HStack>

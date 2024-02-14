@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, Text } from '@chakra-ui/react'
 import JobActionListItem from './JobActionListItem'
 
-export default function JobActionsList() {
+export default function JobActionsList(props) {
   return (
     <Flex flexDirection={"column"} w={"1000px"} h={"300px"} border={"2px"} borderColor={"gray.200"} borderRadius={"2xl"}>
       <Flex w={"full"} px={3} h={"40px"} bg={"blue.300"} borderTopRadius={"inherit"}
@@ -17,8 +17,12 @@ export default function JobActionsList() {
         <Flex w={"400px"} justifyContent={"center"}><Text fontSize={"md"}>Action Details</Text></Flex>
         <Flex w={"200px"} justifyContent={"center"}><Text fontSize={"md"}>Timestamp</Text></Flex>
       </Flex>
-      <JobActionListItem />
-
+      <Flex w={"full"} h={"inherit"}  overflowY={"auto"} flexDirection={"column-reverse"} justifyContent={'flex-end'} >
+      {props.actions !=null && props.actions.map((action) => {
+        return <JobActionListItem key={action.idjobactions} action={action} />
+      }
+      )}
+      </Flex>
     </Flex>
   )
 }

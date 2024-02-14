@@ -10,6 +10,7 @@ import { useQuery } from 'react-query';
 import { makeRequest } from '../axios';
 import { useState } from 'react';
 import { useAuthUser } from 'react-auth-kit';
+import JobMembersList from '../components/JobMembersList';
 
 
 
@@ -119,24 +120,9 @@ export default function JobPanel(props) {
             </HStack>
             <HStack pt={2} justifyContent={"space-between"} mb={4}>
                 <PartListForJob parts={data.parts} />
-                <Flex flexDirection={"column"} w={"300px"} h={"300px"} border={"2px"} borderColor={"gray.200"} borderRadius={"2xl"}>
-                        <Flex w={"full"} h={"40px"} bg={"gray.200"} borderTopRadius={"inherit"}
-                        justifyContent={"center"} alignItems={"center"} fontWeight={"semibold"}> Team Members </Flex>
-                        <Flex w={"full"} h={"220px"} overflowY={"auto"} flexDirection={"column"}>
-                            <Flex w={"full"} minH={"50px"} justifyContent={"space-between"} alignItems={"center"} px={2} borderBottom={"1px"} borderColor={"gray.200"}>
-                                <Flex gap={1} alignItems={"center"}><Avatar size={"sm"} name='Brody Moorman'/><Text>Brody Moorman</Text></Flex>
-                                <Text>Creator</Text>
-                            </Flex>
-                            <Flex w={"full"} minH={"50px"} justifyContent={"space-between"} alignItems={"center"} px={2} borderBottom={"1px"} borderColor={"gray.200"}>
-                                <Flex gap={1} alignItems={"center"}><Avatar size={"sm"} name='Jackson Dooley'/><Text>Jackson Dooley</Text></Flex>
-                            </Flex>
-                        </Flex>
-                        <Flex w={"full"} h={"40px"} borderBottomRadius={"inherit"}
-                        justifyContent={"center"} alignItems={"center"} fontWeight={"semibold"}
-                        bg="blue.400" cursor={"pointer"} color={"white"} _hover={{bg:"blue.300"}}> Add Member </Flex>
-                </Flex>
+                <JobMembersList jobId={data.jobId} members={data.members} />
             </HStack>
-            <JobActionsList />
+            <JobActionsList actions={data.jobActions} />
         </Flex>
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

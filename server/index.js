@@ -8,6 +8,8 @@ import transactionsRoutes from "./routes/transactions.js";
 import jobsRoutes from "./routes/jobs.js";
 import templatesRoutes from "./routes/templates.js";
 import cookieParser from "cookie-parser";
+import uploadRoutes from "./routes/upload.js";
+import roomRoutes from "./routes/rooms.js";
 import cors from "cors";
 import 'dotenv/config'
 
@@ -24,6 +26,7 @@ app.use(cors(
     }
 ))
 app.use(cookieParser())
+app.use(express.static('public'))
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -31,6 +34,9 @@ app.use("/api/parts", partsRoutes);
 app.use("/api/transactions", transactionsRoutes);
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/templates", templatesRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api/rooms", roomRoutes);
+
 
 app.listen(8800, () => {
 

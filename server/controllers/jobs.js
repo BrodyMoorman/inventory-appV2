@@ -95,4 +95,18 @@ export const chargeOutParts = async (req, res) => {
     })
 }
 
+export const addJobMember = async (req, res) => {
+    const token = req.cookies.__auth__;
+    if (!token) return res.status(401).json({ message: "Not logged in!" });
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, userInfo) => {
+        if(err) return res.status(403).json({ message: "Invalid token!" });
+        const q = "INSERT INTO userstojobs (`jobid`,`userid`) VALUES (?)";
+        const values = [req.params.jobId, req.body.userId];
+        db.query(q, [values], (err, data) => {
+            if(err) return res.status(500).json(err);
+            return res.status(200).json({ message: "Member added to job successfully" });
+        })
+    })
+}
+
     

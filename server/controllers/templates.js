@@ -12,6 +12,7 @@ export const getTemplates = (req, res) => {
           at.idassemblytemplates AS transaction_id,
           at.templatename AS transaction_name,
           at.templatedescription AS transaction_description,
+          at.designdocument AS designdocument,
           p.idparts AS part_id,
           p.partname AS part_name,
           p.location AS part_location,
@@ -54,6 +55,7 @@ export const getTemplates = (req, res) => {
               transaction_id: row.transaction_id,
               transaction_name: row.transaction_name,
               transaction_description: row.transaction_description,
+              designdocument: row.designdocument,
               parts: [],
             };
             transactions.push(currentTransaction);
@@ -85,8 +87,8 @@ export const createTemplate = (req, res) => {
     jwt.verify(token, process.env.TOKEN_SECRET, (err, userInfo) => {
         if(err) return res.status(403).json({ message: "Invalid token!" });
         if(userInfo.permission < 3) return res.status(403).json({ message: "You do not have permission to do this" });
-        const q = "INSERT INTO assemblytemplates (`templatename`,`templatedescription`) VALUES (?)";
-        const values = [req.body.name, req.body.description];
+        const q = "INSERT INTO assemblytemplates (`templatename`,`templatedescription`,`designdocument`) VALUES (?)";
+        const values = [req.body.name, req.body.description, req.body.designDoc];
         db.query(q, [values], (err, data) => {
             if(err) return res.status(500).json(err);
             req.body.parts.forEach(part => {

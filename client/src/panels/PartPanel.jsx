@@ -57,7 +57,7 @@ export default function PartPanel(props) {
       <Button colorScheme='blue' >Generate Report</Button>
     </HStack>
     
-    <TransactionList />
+    <TransactionList partid={props.id} />
   </GridItem>
   <GridItem colSpan={2} rowSpan={1}  padding={"10px"} display={'flex'} justifyContent={"flex-end"} flexDir={"column"} alignItems={"flex-end"} boxShadow='lg' bg="white" rounded={"2xl"} p='10px'  > 
     

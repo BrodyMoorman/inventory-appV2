@@ -1,38 +1,48 @@
-import React from 'react'
-import { Tr, Td,   Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Button  } from "@chakra-ui/react"
+import React, { useEffect } from 'react'
+import { Tr, Td, Text, Link,   Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Button, HStack  } from "@chakra-ui/react"
 import { RepeatClockIcon } from '@chakra-ui/icons'
+import { FaRegFile } from "react-icons/fa";
+
 export default function TransactionListItem(props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
  
     const handleClick = () => {
         window.location.href = `/parts/${props.partid}`
     }
-    const isPositive = props.change > 0
+    const isPositive = props.transaction.add > 0
+    useEffect(() => {
+      console.log(props)
+  }, [])
 
   return (
     <>
     <Tr _hover={{ bg: "gray.100" }} onClick={onOpen} cursor={'pointer'}>
-    <Td>{props.timestamp}</Td>
-    <Td>{props.type}</Td>
-    <Td isNumeric textColor={isPositive ? "green.400": "red.400"} >{isPositive&& <>+</> }{props.change}</Td>
-    <Td isNumeric>{props.stock}</Td>
-    <Td >{props.employee}</Td>
+    <Td>{props.transaction.timestamp}</Td>
+    <Td>{props.transaction.transactiontype}</Td>
+    <Td isNumeric textColor={isPositive ? "green.400": "red.400"} >{isPositive ? <>+</> : <>-</> }{props.transaction.quantity}</Td>
+    <Td isNumeric>{props.transaction.stockafter}</Td>
+    <Td >{props.transaction.transactorName}</Td>
     </Tr>
     <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{props.name}</ModalHeader>
+          <ModalHeader>Transaction Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            Transaction Details
+            
+            <p>Transaction Type: {props.transaction.transactiontype}</p>
+            <p>Quantity: {props.transaction.quantity}</p>
+            <p>Stock After: {props.transaction.stockafter}</p>
+            <p>Transactor: {props.transaction.transactorName}</p>
+            <p>Timestamp: {props.transaction.timestamp}</p>
+            {props.transaction.transactionfile && <HStack><Text>Transaction File:</Text><Link href={`http://localhost:8800/fileuploads/${props.transaction.transactionfile}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
+          {props.transaction.transactionfile.slice(13)}<FaRegFile />
+        </Link>
+        </HStack>}
+
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'onClick={handleClick}>Part Page</Button>
-          </ModalFooter>
+
         </ModalContent>
       </Modal>
     </>

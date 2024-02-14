@@ -1,13 +1,15 @@
 import React from 'react'
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, 
         UnorderedList, ListItem, Text, Button, HStack,
+        Link
 } from '@chakra-ui/react'
 
 import TemplatePartDisplay from './TemplatePartDisplay'
 
 import { useQuery } from 'react-query'
 import { makeRequest } from '../axios'
-
+import PdfViewer from './PdfViewer'
+import { FaRegFile } from "react-icons/fa";
 
 export default function AssemblyTemplateListItem(props) {
 
@@ -44,6 +46,14 @@ export default function AssemblyTemplateListItem(props) {
             })}
 
         </UnorderedList>
+        {(props.designDoc) &&
+        <Box mb={4}>
+        <Text fontWeight="semibold">Design Document:</Text>
+        <Link href={`http://localhost:8800/fileuploads/${props.designDoc}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
+        <FaRegFile />{props.designDoc.slice(13)}
+        </Link>
+        </Box>
+        }
         <HStack>
         <Button colorScheme='blue'>Edit</Button>
         <Button colorScheme='red' onClick={handleDelete} >Delete</Button>

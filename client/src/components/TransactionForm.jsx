@@ -13,21 +13,29 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useAuthUser } from 'react-auth-kit'
 
+import JobSelect from './JobSelect'
+
+
 
 
 export default function TransactionForm(props) {
+   
+
+    
     const [values, setValues] = useState({
-        partid: props.id,
+        partid: parseInt(props.id),
         transactorid: 0,
         transactionType: '',
         transactionAmount: 0,
-        addOrRemove: 'add',
-        assemblyId: -1,
+        add: true,
+        jobid: null,
         purchaseOrder: null,
     
       })
+      const auth = useAuthUser()
       
-      const [showAssembly, setShowAssembly] = useState(true)
+      
+      const [showAssembly, setShowAssembly] = useState(false)
       const [canUpload, setCanUpload] = useState(false)
       const handleChange = (e) => {
           if(e.target.name === 'purchaseOrder'){
@@ -38,9 +46,9 @@ export default function TransactionForm(props) {
                 setValues(prev=>({...prev, [e.target.name]: e.target.value}))
                 if(e.target.name === 'transactionType'){
                     if(e.target.value === 'Assembly'){
-                          setShowAssembly(false)
-                    }  else {
                           setShowAssembly(true)
+                    }  else {
+                          setShowAssembly(false)
                     }
                 
                 }
@@ -54,6 +62,19 @@ export default function TransactionForm(props) {
 
          
         }
+        const fileUpload = async (file) => {
+            try{
+                const formData = new FormData();
+                formData.append('file', file)
+                const res = await axios.post('http://localhost:8800/api/upload/', formData, {
+                    withCredentials: true,
+                })
+                console.log(res)
+                return res.data.filename
+            } catch (err) {
+                console.log(err)
+            }
+        }
 
   
         const handleSubmit = async (e) => {
@@ -61,21 +82,40 @@ export default function TransactionForm(props) {
           values.transactorid = auth().idusers
           if(!canUpload){
                 values.purchaseOrder = null
+                
           }
           if(showAssembly){
                 values.assemblyId = -1
           }
-          console.log(values)
-        //   try{
-        //     const res = await axios.post('http://localhost:8800/api/parts/new', values, {
-        //       withCredentials: true,
-        //     }) 
-        //     console.log(res)
-        //   } catch (err) {
-        //     console.log(err)
-        //   }
+try{
+          if(values.purchaseOrder){
+             const fileName =  await fileUpload(values.purchaseOrder)
+                values.purchaseOrder = fileName
+          }
         }
-        const auth = useAuthUser();
+          catch(err){
+                console.log("Error uploading file")
+                return
+            }
+            console.log(values)
+            try {
+                const res = await axios.post('http://localhost:8800/api/transactions/', values, {
+                    withCredentials: true,
+                })
+                console.log(res)
+            }
+            catch(err){
+                console.log(err)
+            }
+            window.location.reload()
+        }
+        const handleAddorRemove = (e) => {
+            if(e.target.name === 'add'){
+                setValues(prev=>({...prev, add: true}))
+            } else {
+                setValues(prev=>({...prev, add: false}))
+            }
+        }
         
   return (
     <Box>
@@ -87,8 +127,8 @@ export default function TransactionForm(props) {
                 <Box w="50%">
                 <FormControl isRequired>
                   <FormLabel>Transaction Amount</FormLabel>
-                  <NumberInput name='transactionAmount' min={1} defaultValue={1}>
-                    <NumberInputField />
+                  <NumberInput  min={1} defaultValue={1}>
+                    <NumberInputField name='transactionAmount' onChange={handleChange}  />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -97,16 +137,12 @@ export default function TransactionForm(props) {
                 </FormControl>
                 </Box>
                 <Box w="50%">
-                <RadioGroup defaultValue='add' name='addOrRemove'>
-                <Stack spacing="0"  direction='column'>
-                    <Radio colorScheme='red' value='remove' m="0">
-                    Remove
-                    </Radio>
-                    <Radio colorScheme='green' value='add' m="0">
-                    Add
-                    </Radio>
-                </Stack>
-                </RadioGroup>
+                
+                <HStack spacing="2" mt={8}  direction='column'>
+                    <Button colorScheme='green' name='add' variant={values.add ? "solid" : "outline"} onClick={handleAddorRemove}>Add</Button>
+                    <Button colorScheme='red' name='remove' variant={!values.add ? "solid" : "outline"} onClick={handleAddorRemove}>Remove</Button>
+                </HStack>
+                
                 </Box>
               
 
@@ -124,14 +160,7 @@ export default function TransactionForm(props) {
                 </FormControl>
             </Box>
             <Box w="50%">
-            <FormControl isDisabled={showAssembly}>
-                <FormLabel >Assembly</FormLabel>
-                    <Select placeholder='Select option' name='assembly' onChange={handleChange}>
-                        <option value='Bay 1'>Bay 1</option>
-                        <option value='Bay 2'>Bay 2</option>
-                        <option value='Bay 3'>Bay 3</option>
-                    </Select>
-            </FormControl>
+            <JobSelect isDisabled={!showAssembly} callback={(jobid) => setValues(prev=>({...prev, jobid: jobid}))} />
             </Box>
             </HStack>
             <FormControl isDisabled={!canUpload} >

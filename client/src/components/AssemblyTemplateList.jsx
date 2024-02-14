@@ -35,7 +35,7 @@ export default function AssemblyTemplateList() {
     <Accordion allowToggle w="full" maxH="96" overflowY="auto" p={1}>
         {data.map((template, index) => {
             return (
-              <AssemblyTemplateListItem key={index} id={template.transaction_id} name={template.transaction_name} description={template.transaction_description} parts={template.parts} />
+              <AssemblyTemplateListItem key={index} id={template.transaction_id} name={template.transaction_name} designDoc={template.designdocument} description={template.transaction_description} parts={template.parts} />
             )
         })}
     </Accordion>

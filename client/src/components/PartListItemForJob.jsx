@@ -18,17 +18,43 @@ export default function PartListItemForJob(props) {
     setTestValue(maxVal)
   }
   const handleSubmit = () => {
-    const values = {
-      userId: auth().idusers,
-      numCharged: testValue,
-      partId: props.part.partID,
+    const values1 = {
+      partid: props.part.partID,
+      transactorid: auth().idusers,
+      transactionType: 'Assembly',
+      transactionAmount: testValue,
+      add: false,
+      jobid: jobid,
+      purchaseOrder: null,
+  
     }
-    axios.post(`http://localhost:8800/api/jobs/partcharge/${jobid}`, values, {withCredentials: true})
+
+      
+    axios.post(`http://localhost:8800/api/transactions`, values1, {withCredentials: true})
     .then(res => {
       console.log(res)
-      window.location.reload()
-    })
+      const values2 = {
+        userId: auth().idusers,
+        numCharged: testValue,
+        partId: props.part.partID,
+      }
+      axios.post(`http://localhost:8800/api/jobs/partcharge/${jobid}`, values2, {withCredentials: true})
+      .then(res => {
+        console.log(res)
+        window.location.reload()
+      })
+      .catch(err => {
+        console.log(err)
+      })
 
+    }).catch(err => {
+      console.log(err)
+    }
+    
+    )
+  }
+  const handleRedirect = () => {
+    window.location.href = `/parts/${props.part.partID}`
   }
 
   return (
@@ -58,7 +84,7 @@ export default function PartListItemForJob(props) {
         <VStack justifyContent={"flex-start"} alignItems={"flex-start"}>
         <Button colorScheme={"blue"} my={2} isDisabled={((testValue>maxVal) || (testValue<=0) || (testValue==null))} onClick={handleSubmit}>Submit</Button>
         <Divider />
-        <Button variant={"outline"}>Part Page</Button>
+        <Button variant={"outline"} onClick={handleRedirect}>Part Page</Button>
         </VStack>
         
       </PopoverBody>

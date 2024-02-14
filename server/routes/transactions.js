@@ -1,7 +1,8 @@
 import express from 'express';
-import {  } from '../controllers/transactions.js';
+import { createTransaction, getTransactionsForPart } from '../controllers/transactions.js';
 const router = express.Router();
 
-router.get('', );
+router.get('/part/:partid', getTransactionsForPart );
+router.post('', createTransaction);
 
 export default router;
