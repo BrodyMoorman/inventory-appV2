@@ -8,7 +8,7 @@ export default function PartListForJob(props) {
     estimatedCost += Number((part.partCost).toFixed(2)) * part.numNeeded
   })
   return (
-    <Flex flexDirection={"column"} w={"1000px"} h={"300px"} border={"2px"} borderColor={"gray.200"} borderRadius={"2xl"}>
+    <Flex flexDirection={"column"} w={"80%"} h={"300px"} border={"2px"} borderColor={"gray.200"} borderRadius={"2xl"}>
       <Flex w={"full"} px={3} h={"40px"} bg={"blue.300"} borderTopRadius={"inherit"}
         justifyContent={"space-between"} alignItems={"center"} fontWeight={"semibold"} color={"white"}>
         <Text fontSize={"xl"}>Parts List</Text>
