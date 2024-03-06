@@ -35,7 +35,7 @@ export default function JobActionListItem(props) {
             </VStack></Text></Flex>
             </>
             }
-          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={"md"}>{props.action.actionTime}</Text></Flex>
+          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={"md"}>{props.action.actionTime.slice(0, -7)}</Text></Flex>
     </Flex>
   )
 }

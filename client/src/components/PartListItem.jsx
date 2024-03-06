@@ -12,7 +12,7 @@ export default function PartListItem(props) {
     }
   return (
     <>
-    <Tr _hover={{ bg: "gray.100" }} onClick={onOpen} cursor={'pointer'}>
+    <Tr _hover={{ bg: "gray.100" }} onClick={handleClick} cursor={'pointer'}>
     <Td>{props.partNo}</Td>
     <Td>{props.name}</Td>
     <Td>{props.location}</Td>

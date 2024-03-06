@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const makeRequest = axios.create({
-    baseURL: 'http://localhost:8800/api/',
+    baseURL: `${import.meta.env.VITE_BACKEND_URL}/`,
     withCredentials: true,
 });
+

@@ -17,7 +17,7 @@ export default function TransactionListItem(props) {
   return (
     <>
     <Tr _hover={{ bg: "gray.100" }} onClick={onOpen} cursor={'pointer'}>
-    <Td>{props.transaction.timestamp}</Td>
+    <Td>{props.transaction.timestamp.slice(0, -5).replace('T', ' | ')}</Td>
     <Td>{props.transaction.transactiontype}</Td>
     <Td isNumeric textColor={isPositive ? "green.400": "red.400"} >{isPositive ? <>+</> : <>-</> }{props.transaction.quantity}</Td>
     <Td isNumeric>{props.transaction.stockafter}</Td>
@@ -34,8 +34,8 @@ export default function TransactionListItem(props) {
             <p>Quantity: {props.transaction.quantity}</p>
             <p>Stock After: {props.transaction.stockafter}</p>
             <p>Transactor: {props.transaction.transactorName}</p>
-            <p>Timestamp: {props.transaction.timestamp}</p>
-            {props.transaction.transactionfile && <HStack><Text>Transaction File:</Text><Link href={`http://localhost:8800/fileuploads/${props.transaction.transactionfile}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
+            <p>Timestamp: {props.transaction.timestamp.slice(0, -5).replace('T', ' | ')}</p>
+            {props.transaction.transactionfile && <HStack><Text>Transaction File:</Text><Link href={`${import.meta.env.VITE_FRONTEND_URL}/fileuploads/${props.transaction.transactionfile}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
           {props.transaction.transactionfile.slice(13)}<FaRegFile />
         </Link>
         </HStack>}

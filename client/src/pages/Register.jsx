@@ -17,12 +17,16 @@ import {
   } from '@chakra-ui/react'
   import { Link as ReactRouterLink } from 'react-router-dom'
 
-  import { useState } from 'react'
+  import { useState, useEffect } from 'react'
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
   import  axios  from 'axios'
+  import { useNavigate } from 'react-router-dom'
+  import { useIsAuthenticated } from 'react-auth-kit'
 
 export default function Register() {
 
+    const navigate = useNavigate()
+    const isAuthenticated = useIsAuthenticated()
     const [showPassword, setShowPassword] = useState(false)
     const [err, setErr] = useState(null)
     const [inputs, setInputs] = useState({
@@ -39,15 +43,21 @@ export default function Register() {
     const handleSubmit = async (e) => {
       e.preventDefault()
       try {
-        await axios.post('http://localhost:8800/api/auth/register', inputs)
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, inputs)
         
       }
       catch (err) {
         console.log(err)
        setErr(err.response.data.message)
       }
+      window.location.href = '/login'
     }
-
+    useEffect(() => {
+      if(isAuthenticated) {
+        navigate('/parts')
+      }
+    }
+    ,[])
 
   return (
      <Flex

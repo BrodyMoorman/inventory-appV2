@@ -14,6 +14,8 @@ import Job from './pages/Job'
 import Room from './pages/Room'
 import RoomDesignerPage from './pages/RoomDesignerPage'
 import User from './pages/User'
+import Team from './pages/Team'
+import LandingPage from './pages/LandingPage'
 
 import { RequireAuth } from 'react-auth-kit'
 import { Route, Routes } from 'react-router-dom'
@@ -27,9 +29,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
    <Routes>
-      <Route path="/" element={<RequireAuth loginPath='/login'>
-        <Home />
-      </RequireAuth>} />
+      <Route path="/" element={<LandingPage/>} />
       <Route path="/parts" element={ <RequireAuth loginPath='/login'><Parts/></RequireAuth> }/>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -42,6 +42,8 @@ function App() {
       <Route path="/room/:roomid" element={<RequireAuth loginPath='/login'><Room /></RequireAuth>} />
       <Route path="/roomdesigner/:roomid" element={<RequireAuth loginPath='/login'><RoomDesignerPage /></RequireAuth>} />
       <Route path="/users/:userid" element={<RequireAuth loginPath='/login'><User /></RequireAuth>} />
+      <Route path="/team" element={<RequireAuth loginPath='/login'><Team /></RequireAuth>} />
+      
 
       
     </Routes>

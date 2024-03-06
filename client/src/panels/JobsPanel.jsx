@@ -15,7 +15,7 @@ export default function JobsPanel() {
   const { isLoading, error, data } = useQuery(['jobs'], () =>
     makeRequest.get(`/jobs/user/${auth().idusers}`).then((res) => {
       console.log(res.data)
-      return res.data
+      return res.data.toReversed()
     })
   )
   if (isLoading) return 'Loading...'
@@ -27,10 +27,7 @@ export default function JobsPanel() {
         <Button colorScheme='blue' onClick={onOpen}>New Job</Button>
       </HStack>
       <MyJobs data={data} />
-       <Text fontSize="3xl" fontWeight="semibold" pb="10px">All Jobs:</Text>
-       <SimpleGrid minChildWidth='350px' spacing={"20px"} overflowX={'hidden'} pb="15px">
-        
-        </SimpleGrid>
+
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

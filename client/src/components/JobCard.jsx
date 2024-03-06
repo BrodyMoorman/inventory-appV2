@@ -33,7 +33,7 @@ export default function JobCard(props) {
         </HStack>
         <Box h="50%" w="100%">
           <VStack justify="flex-end" alignItems={"flex-end"} h="full">
-          <HStack><Text pt={"max"}>Date Created:</Text><Text fontWeight={"semibold"}>{props.job.creationdate}</Text></HStack>
+          <HStack><Text pt={"max"}>Date Created:</Text><Text fontWeight={"semibold"}>{props.job.creationdate.split("T")[0]}</Text></HStack>
           
           </VStack>
         </Box>

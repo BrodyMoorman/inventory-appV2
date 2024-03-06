@@ -12,6 +12,7 @@ import axios from 'axios'
 
 
 export default function NewAssemblyTemplate() {
+    const [error, setError] = useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [selectedParts, setSelectedParts] = useState([])
     const [values, setValues] = useState({
@@ -50,7 +51,7 @@ export default function NewAssemblyTemplate() {
         try{
             const formData = new FormData();
             formData.append('file', file)
-            const res = await axios.post('http://localhost:8800/api/upload/', formData, {
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/upload/`, formData, {
                 withCredentials: true,
             })
             console.log(res)
@@ -64,6 +65,16 @@ export default function NewAssemblyTemplate() {
         e.preventDefault()
         values.parts = selectedParts
         console.log(values)
+        if(values.name === '') {
+            setError("Please fill out all fields.")
+            return
+        }
+        if(values.parts.length === 0) {
+            setError("Please add at least one part.")
+            return
+        }
+
+
         
         try{
             if(designFile){
@@ -77,7 +88,7 @@ export default function NewAssemblyTemplate() {
         }
         console.log(values)
         try{
-          const res = await axios.post('http://localhost:8800/api/templates/new', values, {
+          const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/templates/new`, values, {
             withCredentials: true,
           }) 
         } catch (err) {
@@ -154,7 +165,7 @@ export default function NewAssemblyTemplate() {
                         )
                     })}
                 
-
+                {error && <Text color={"red.400"}>{error}</Text>}
                 </Stack>
             </DrawerBody>
 

@@ -38,7 +38,7 @@ export default function JobPanel(props) {
             userId: auth().idusers,
             oldStatus: data.jobStatus
         }
-        axios.put(`http://localhost:8800/api/jobs/status/${props.jobid}`, values , {withCredentials: true})
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/jobs/status/${props.jobid}`, values , {withCredentials: true})
         .then(res => {
             console.log(res)
             window.location.reload()
@@ -69,18 +69,7 @@ export default function JobPanel(props) {
     if (isLoading) return 'Loading...'
     if (error) console.log(error)
 
-    const handleFetch = () => {
-        axios.get('http://localhost:8800/api/jobs/6', {withCredentials: true})
-        .then(res => {
-            let data = JSON.parse(res.data.job)
-            data.parts = removeDuplicateParts(data.parts)
-            data.members = removeDuplicateUsers(data.members)
-            console.log(data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }
+
 
   return (
     <Flex justify={"center"} flexDir={"column"} alignItems={"center"} gap={"10px"}>
@@ -112,7 +101,6 @@ export default function JobPanel(props) {
             <MenuList>
                 <MenuItem onClick={onOpen}>Change Job Status</MenuItem>
                 <MenuItem>Create Template From Job</MenuItem>
-                <MenuItem onClick={handleFetch}>Fetch Test</MenuItem>
                 <MenuDivider/>
                 <MenuItem color={"red.300"}>Delete Job</MenuItem>
             </MenuList>

@@ -11,7 +11,10 @@ export const manipulatePartStock = (partid, quantity, add) => {
             let newStock;
             if(add) newStock = stock + parseInt(quantity);
             else{
-            if(stock < quantity) reject( { message: "Insufficient stock!" });
+            if(stock < quantity){
+                reject( { message: "Insufficient stock!" });
+                return;
+            } 
                 newStock = stock - parseInt(quantity);
             }
             console.log("old Stock:" + stock + "new Stock:" + newStock);

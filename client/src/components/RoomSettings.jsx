@@ -39,7 +39,7 @@ export default function RoomsSettings() {
                 roomName: input
             }
             try{
-            axios.post('http://localhost:8800/api/rooms/new', values, {withCredentials: true}).then(res => {
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/rooms/new`, values, {withCredentials: true}).then(res => {
                 toast({
                     title: "Room Created.",
                     status: "success",

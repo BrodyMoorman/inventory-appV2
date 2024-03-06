@@ -70,7 +70,7 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Dashboard', link: "/", icon: AiOutlineDashboard },
+  // { name: 'Dashboard', link: "/", icon: AiOutlineDashboard },
   { name: 'Parts', link: "/parts", icon: BiWrench },
   { name: 'Jobs', link: "/jobs", icon: CgSmartHomeWashMachine },
   { name: 'Team',link: "/team", icon: AiOutlineTeam },
@@ -204,9 +204,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
+              <MenuItem onClick={()=> window.location.href = `/users/${auth().idusers}` }>Profile</MenuItem>
+              <MenuItem onClick={()=> window.location.href = `/settings` }>Settings</MenuItem>
               <MenuDivider />
               <MenuItem color={'red.400'} onClick={handleLogOut}>Sign out</MenuItem>
             </MenuList>

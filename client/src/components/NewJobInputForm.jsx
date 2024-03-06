@@ -13,6 +13,7 @@ import axios from 'axios'
 
 
 export default function NewJobInputForm(props) {
+    const [error, setError] = useState("")
     const auth = useAuthUser()
     const [values, setValues] = useState({
         jobTitle: '',
@@ -76,9 +77,12 @@ export default function NewJobInputForm(props) {
             parts: parts,
             members: members
         }
-        console.log(newJob)
+        if(newJob.jobTitle === '' || newJob.completionDate === '' || newJob.parts.length === 0 || newJob.members.length === 0) {
+            setError("Please fill out all fields.")
+            return
+        }
         try{
-            const res = await axios.post('http://localhost:8800/api/jobs/new', newJob, {
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/jobs/new`, newJob, {
               withCredentials: true,
             }) 
             window.location.reload()
@@ -89,7 +93,7 @@ export default function NewJobInputForm(props) {
     }
     
     useEffect(() => {
-        if(template !== null) {
+        if(template.idtemplates !== -1) {
             setParts(template.parts)
         }
     }
@@ -101,8 +105,8 @@ export default function NewJobInputForm(props) {
     
   return (
     <VStack>
-        <Button onClick={()=>console.log(template)}></Button>
-        {(template != null) && <Text>Instance of: {template.transaction_name}</Text>}
+        {(template.idtemplates !== -1) && <Text>Instance of: {template.transaction_name}</Text>}
+
         <FormControl isRequired>
                   <FormLabel>Job Title</FormLabel>
                   <Input type="text" name='jobTitle' onChange={handleChange}  />
@@ -160,7 +164,7 @@ export default function NewJobInputForm(props) {
             <Button>Back</Button>
             <Button colorScheme='blue' onClick={handleCreate}>Create</Button>
         </HStack>
-        
+        {error && <Text color={"red.400"}>{error}</Text>}
 
     </VStack>
   )

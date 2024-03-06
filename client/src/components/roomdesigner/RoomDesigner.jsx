@@ -17,7 +17,7 @@ export default function RoomDesigner() {
     const { roomid } = useParams()
     const addShelf = () => {
         setCount(count + 1)
-        const shelfName = "Shelve " + count
+        const shelfName = "Shelf " + count
         const newShelf = {
             id: count,
             shelfName: shelfName,
@@ -71,7 +71,7 @@ export default function RoomDesigner() {
                 y: shelf.y
             }
             console.log(data)
-            axios.post("http://localhost:8800/api/rooms/createshelve", data,  {withCredentials: true} )
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/rooms/createshelve`, data,  {withCredentials: true} )
             .then((res) => {
                 console.log(res)
             })

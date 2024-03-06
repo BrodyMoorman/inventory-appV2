@@ -1,12 +1,13 @@
 import React from 'react'
 import { Flex, Text, HStack, VStack, PopoverTrigger, Popover, PopoverContent, PopoverArrow, PopoverHeader, PopoverBody, PopoverFooter,
-   PopoverCloseButton, NumberInput, NumberInputField, Button, Divider } from '@chakra-ui/react'
+   PopoverCloseButton, NumberInput, NumberInputField, Button, Divider, useToast } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useAuthUser } from 'react-auth-kit'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
 export default function PartListItemForJob(props) {
+  const toast = useToast()
   const { jobid } = useParams()
   const auth = useAuthUser()
   const maxVal = props.part.numNeeded - props.part.numUsed
@@ -30,25 +31,40 @@ export default function PartListItemForJob(props) {
     }
 
       
-    axios.post(`http://localhost:8800/api/transactions`, values1, {withCredentials: true})
-    .then(res => {
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/transactions`, values1, {withCredentials: true})
+    .then(res=> {
       console.log(res)
       const values2 = {
         userId: auth().idusers,
         numCharged: testValue,
         partId: props.part.partID,
       }
-      axios.post(`http://localhost:8800/api/jobs/partcharge/${jobid}`, values2, {withCredentials: true})
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/jobs/partcharge/${jobid}`, values2, {withCredentials: true})
       .then(res => {
         console.log(res)
         window.location.reload()
       })
       .catch(err => {
-        console.log(err)
+        toast({
+          title: "Error",
+          description: err.response.data.message,
+          status: "error",
+          position: "top",
+          duration: 9000,
+          isClosable: true,
+        })
       })
 
     }).catch(err => {
-      console.log(err)
+      toast({
+        title: "Error",
+        description: err.response.data.message,
+        status: "error",
+        position: "top",
+        duration: 9000,
+        isClosable: true,
+      })
+      
     }
     
     )

@@ -49,7 +49,7 @@ export default function AssemblyTemplateListItem(props) {
         {(props.designDoc) &&
         <Box mb={4}>
         <Text fontWeight="semibold">Design Document:</Text>
-        <Link href={`http://localhost:8800/fileuploads/${props.designDoc}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
+        <Link href={`${import.meta.env.VITE_BACKEND_STATIC_URL}/fileuploads/${props.designDoc}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
         <FaRegFile />{props.designDoc.slice(13)}
         </Link>
         </Box>

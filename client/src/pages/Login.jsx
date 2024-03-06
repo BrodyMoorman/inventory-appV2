@@ -1,7 +1,7 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useSignIn, useAuthUser } from 'react-auth-kit'
+import { useSignIn, useAuthUser, useIsAuthenticated } from 'react-auth-kit'
 import {
     Flex,
     Box,
@@ -17,6 +17,7 @@ import {
     Link,
   } from '@chakra-ui/react'
   import { Link as ReactRouterLink, useNavigate } from 'react-router-dom'
+  
 export default function Login() {
   const [values, setValues] = useState({
     email: '',
@@ -25,6 +26,9 @@ export default function Login() {
   const [err, setErr] = useState(null)
   const signIn = useSignIn()
   const navigate = useNavigate();
+  const isAuthenticated = useIsAuthenticated()
+
+
   
 
 
@@ -35,7 +39,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try{
-      const res = await axios.post('http://localhost:8800/api/auth/login', values, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, values, {
         withCredentials: true,
       })
       signIn({
@@ -44,7 +48,7 @@ export default function Login() {
         tokenType: 'Bearer',
         authState: res.data.user,
       });
-      navigate('/')
+      navigate('/parts')
 
      
 
@@ -54,6 +58,12 @@ export default function Login() {
       setErr(err.response.data.message)
     }
   }
+  useEffect(() => {
+    if(isAuthenticated) {
+      navigate('/parts')
+    }
+  }
+  ,[])
 
   return (
     <Flex

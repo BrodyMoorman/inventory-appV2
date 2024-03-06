@@ -8,6 +8,7 @@ import { Box, HStack, FormControl, FormLabel, Input, Select, Button, Text,
     Radio,
     RadioGroup,
     Stack,
+    useToast,
     } from '@chakra-ui/react'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
@@ -19,6 +20,7 @@ import JobSelect from './JobSelect'
 
 
 export default function TransactionForm(props) {
+    const toast = useToast()
    
 
     
@@ -66,7 +68,7 @@ export default function TransactionForm(props) {
             try{
                 const formData = new FormData();
                 formData.append('file', file)
-                const res = await axios.post('http://localhost:8800/api/upload/', formData, {
+                const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/upload/`, formData, {
                     withCredentials: true,
                 })
                 console.log(res)
@@ -99,15 +101,23 @@ try{
             }
             console.log(values)
             try {
-                const res = await axios.post('http://localhost:8800/api/transactions/', values, {
+                const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/transactions/`, values, {
                     withCredentials: true,
                 })
                 console.log(res)
+                window.location.reload()
             }
             catch(err){
-                console.log(err)
+                toast({
+                    title: "Error",
+                    description: err.response.data.message,
+                    status: "error",
+                    duration: 2000,
+                    position: "top",
+                    isClosable: true,
+                  })
             }
-            window.location.reload()
+            
         }
         const handleAddorRemove = (e) => {
             if(e.target.name === 'add'){
@@ -175,7 +185,7 @@ try{
             </FormControl>
            
             <HStack pt={"10px"}justifyContent={"flex-end"}>
-            <Button colorScheme='blue' onClick={handleSubmit} >Create Part</Button>
+            <Button colorScheme='blue' onClick={handleSubmit} >Create Transaction</Button>
             </HStack>
     </Box>
   )

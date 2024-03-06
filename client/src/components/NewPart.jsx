@@ -21,10 +21,11 @@ export default function NewPart() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try{
-      const res = await axios.post('http://localhost:8800/api/parts/new', values, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/parts/new`, values, {
         withCredentials: true,
       }) 
       console.log(res)
+      window.location.reload()
     } catch (err) {
       console.log(err)
     }
@@ -41,26 +42,6 @@ export default function NewPart() {
               </Box>
             
             <HStack>
-            <Box w="50%">
-            <FormControl isRequired>
-                <FormLabel>Room:</FormLabel>
-                    <Select placeholder='Select option' name='room' onChange={handleChange}>
-                        <option value='Room 1'>Room 1</option>
-                        <option value='Room 2'>Room 2</option>
-                        <option value='Room 3'>Room 3</option>
-                    </Select>
-                </FormControl>
-            </Box>
-            <Box w="50%">
-            <FormControl isRequired>
-                <FormLabel > Bay:</FormLabel>
-                    <Select placeholder='Select option' name='bay' onChange={handleChange}>
-                        <option value='Bay 1'>Bay 1</option>
-                        <option value='Bay 2'>Bay 2</option>
-                        <option value='Bay 3'>Bay 3</option>
-                    </Select>
-                </FormControl>
-            </Box>
             </HStack>
             <HStack>
             <Box>

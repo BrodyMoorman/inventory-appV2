@@ -52,7 +52,7 @@ export default function SelectJobCreationType(props) {
                         <Text fontWeight={"semibold"} textAlign={"center"} color={"#393939"}>Create Job From Template</Text>
                     </Box>
                 </VStack>
-                <VStack  onClick={()=>{props.callback(null)}}   border={"dashed"} borderColor={"#C1c1c2"} cursor={'pointer'} borderWidth={"2px"} p={"3"} rounded={"xl"} color={"#C1c1c2"} _hover={{color:"#4096CC", borderColor:"#4096CC", border:"solid ",borderWidth:"2px"}}  >
+                <VStack  onClick={()=>{props.callback({idtemplates:-1})}}   border={"dashed"} borderColor={"#C1c1c2"} cursor={'pointer'} borderWidth={"2px"} p={"3"} rounded={"xl"} color={"#C1c1c2"} _hover={{color:"#4096CC", borderColor:"#4096CC", border:"solid ",borderWidth:"2px"}}  >
                     <Box>
                         <Icon as={PiNoteBlankLight} fontSize={"7xl"}  />
                     </Box>

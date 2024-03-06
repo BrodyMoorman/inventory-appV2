@@ -7,7 +7,7 @@ export default function PartList(props) {
     <TableContainer w={"full"}  overflowY={'auto'}   >
     
   <Table variant='simple'  >
-    <TableCaption>Load More</TableCaption>
+
     <Thead>
       <Tr>
         <Th>Part No.</Th>

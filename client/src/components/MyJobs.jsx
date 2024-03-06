@@ -5,25 +5,12 @@ export default function MyJobs(props) {
   return (
     <>
     <Text fontSize="3xl" fontWeight="semibold" pb="10px">My Jobs:</Text>
-      <HStack spacing="2" overflow="auto" pb="4"
-      __css={{
-        '&::-webkit-scrollbar': {
-          width: '4px',
-        },
-        '&::-webkit-scrollbar-track': {
-          width: '2px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: '#4A5568',
-          borderRadius: '24px',
-        },
-      }}
-      >
+    <SimpleGrid columns={[1,4]} spacing={5} p={2}>
       {props.data.map((job) => (
         <JobCard key={job.idjobs} job={job} />
       ))}
       
-       </HStack>
+      </SimpleGrid>
     </>
   )
 }

@@ -18,7 +18,7 @@ export default function StaticStorageRoom(props) {
   const constraintsRef = useRef(null)
   return (
     <ChakraBox
-      bg="gray.400"
+    bg="gray.300"
       w={`${1300/props.aspectRatio}px`}
       h={`${720/props.aspectRatio}px`}
       borderX={"2px"}
@@ -26,7 +26,7 @@ export default function StaticStorageRoom(props) {
       ref={constraintsRef}
     >
         {props.shelves.map((shelf, index) => {
-            return <StaticShelf aspectRatio={props.aspectRatio} key={shelf.id} shelf={shelf} parent={constraintsRef} />
+            return <StaticShelf blockClick={props.blockClick} aspectRatio={props.aspectRatio} key={index} shelf={shelf} parent={constraintsRef} />
         })}
 
     </ChakraBox>

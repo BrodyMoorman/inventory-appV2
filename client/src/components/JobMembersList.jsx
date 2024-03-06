@@ -14,7 +14,7 @@ export default function JobMembersList(props) {
             const values = {
                 userId: user.idusers,
             }
-            const res = await axios.post(`http://localhost:8800/api/jobs/addmember/${props.jobId}`, values, {withCredentials: true})
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/jobs/addmember/${props.jobId}`, values, {withCredentials: true})
             console.log(res)
             onClose()
             window.location.reload()

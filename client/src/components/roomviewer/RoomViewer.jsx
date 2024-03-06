@@ -7,8 +7,12 @@ import { useParams } from 'react-router-dom'
 
 export default function RoomViewer(props) {
     const { roomid } = useParams()
+    let actualroomid = roomid
+    if(props.roomid) {
+        actualroomid = props.roomid
+    }
     const { isLoading, error, data } = useQuery('room', () => 
-    makeRequest.get(`/rooms/getshelves/${roomid}`).then((res) => {
+    makeRequest.get(`/rooms/getshelves/${actualroomid}`).then((res) => {
         console.log(res.data)
         if(props.aspectRatio > 1) {
             res.data.forEach((shelf) => {
@@ -18,6 +22,15 @@ export default function RoomViewer(props) {
                 shelf.y = shelf.y / props.aspectRatio
             })
         }
+        if(props.activeshelveid){
+          console.log("Active shelve id: ", props.activeshelveid)
+            res.data.forEach((shelf) => {
+                if(shelf.idshelvingunits === props.activeshelveid) {
+                    shelf.selected = true
+                }
+            })
+        }
+
         return res.data
     }))
     if (isLoading) return 'Loading...'
@@ -33,7 +46,7 @@ export default function RoomViewer(props) {
           <HStack w={"full"}bg={"white"} h={"5%"} boxShadow={"lg"} borderTopRadius={"inherit"} pl={2} >
               <Text fontWeight={"semibold"}>Room Viewer</Text>
           </HStack>
-          <StaticStorageRoom aspectRatio={props.aspectRatio} shelves={data} />
+          <StaticStorageRoom blockClick={props.roomid} aspectRatio={props.aspectRatio} shelves={data} />
 
       </VStack>
 }
