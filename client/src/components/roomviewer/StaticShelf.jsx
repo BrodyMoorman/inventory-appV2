@@ -1,8 +1,6 @@
 import React from 'react'
 import {motion, isValidMotionProp } from "framer-motion";
 import { chakra, VStack, HStack, Text, shouldForwardProp, Modal, ModalBody, ModalOverlay, Button, ModalFooter, ModalHeader, ModalContent, ModalCloseButton, useDisclosure } from "@chakra-ui/react";
-import ShelveDesigner from '../shelvedesigner/ShelveDesigner';
-import ShelveViewer from '../shelveviewer/shelveviewer';
 import ViewerDesignerSwitch from '../shelvedesigner/ViewerDesignerSwitch';
 
 const ChakraBox = chakra(motion.div, {

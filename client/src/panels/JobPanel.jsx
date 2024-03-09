@@ -106,7 +106,7 @@ export default function JobPanel(props) {
             </MenuList>
             </Menu>   
             </HStack>
-            <HStack pt={2} justifyContent={"space-between"} mb={4}>
+            <HStack flexDirection={["column-reverse", "row"]} pt={2} justifyContent={"space-between"} mb={4}>
                 <PartListForJob parts={data.parts} />
                 <JobMembersList jobId={data.jobId} members={data.members} />
             </HStack>

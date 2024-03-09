@@ -42,6 +42,14 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
       e.preventDefault()
+      if(inputs.password.length < 8) {
+        setErr('Password must be at least 8 characters long')
+        return
+      }
+      if(inputs.firstName === '' || inputs.email === '') {
+        setErr('First Name and Email are required')
+        return
+      }
       try {
         await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, inputs)
         
@@ -53,10 +61,17 @@ export default function Register() {
       window.location.href = '/login'
     }
     useEffect(() => {
-      if(isAuthenticated) {
-        navigate('/parts')
+      if(isAuthenticated()) {
+        window.location.href = '/parts'
+    }
+    const keyDownHandler = (e) => {
+      if(e.key === "Enter" && e.shiftKey === false) {
+        handleSubmit(e)
       }
     }
+    document.addEventListener('keydown', keyDownHandler)
+  
+  }
     ,[])
 
   return (

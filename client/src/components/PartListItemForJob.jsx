@@ -1,12 +1,13 @@
 import React from 'react'
 import { Flex, Text, HStack, VStack, PopoverTrigger, Popover, PopoverContent, PopoverArrow, PopoverHeader, PopoverBody, PopoverFooter,
-   PopoverCloseButton, NumberInput, NumberInputField, Button, Divider, useToast } from '@chakra-ui/react'
+   PopoverCloseButton, NumberInput, NumberInputField, Button, Divider, useToast, useMediaQuery } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useAuthUser } from 'react-auth-kit'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
 export default function PartListItemForJob(props) {
+  const isMobile = useMediaQuery("(max-width: 600px)")
   const toast = useToast()
   const { jobid } = useParams()
   const auth = useAuthUser()
@@ -74,15 +75,15 @@ export default function PartListItemForJob(props) {
   }
 
   return (
-    <Popover placement='right'>
+    <Popover placement={isMobile?'top':'right'}>
       <PopoverTrigger>
         <Flex w={"full"} borderBottom={"1px"}  borderColor={'gray.300'} h={"40px"}  
         justifyContent={"space-between"} alignItems={"center"} fontWeight={"semibold"} cursor={"pointer"} _hover={{bg:"gray.200"}}>
-          <Flex w={"200px"} justifyContent={"center"} ><Text fontSize={"md"}>{props.part.partName}</Text></Flex>
-          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={"md"}>{props.part.partLocation}</Text></Flex>
-          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={"md"}>{props.part.partStock}</Text></Flex>
-          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={"md"}>{props.part.numNeeded}</Text></Flex>
-          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={"md"}>{props.part.numUsed}</Text></Flex>
+          <Flex w={"200px"} justifyContent={"center"} ><Text fontSize={["xs","md"]}>{props.part.partName}</Text></Flex>
+          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={["2xs","md"]}>{props.part.partLocation}</Text></Flex>
+          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={["xs","md"]}>{props.part.partStock}</Text></Flex>
+          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={["xs","md"]}>{props.part.numNeeded}</Text></Flex>
+          <Flex w={"200px"} justifyContent={"center"}><Text fontSize={["xs","md"]}>{props.part.numUsed}</Text></Flex>
         </Flex>
     </PopoverTrigger>
     <PopoverContent>

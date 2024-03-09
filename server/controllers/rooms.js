@@ -60,6 +60,7 @@ export const changeShelfRows = (req, res) => {
 }
 
 export const createBin = (req, res) => {
+    console.log(req.body)
     const token = req.cookies.__auth__;
     if (!token) return res.status(401).json({ message: "Not logged in!" });
     jwt.verify(token, process.env.TOKEN_SECRET, (err, userInfo) => {

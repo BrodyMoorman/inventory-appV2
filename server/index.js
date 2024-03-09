@@ -1,6 +1,4 @@
 import  express  from "express";
-const app = express();
-
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import partsRoutes from "./routes/parts.js";
@@ -12,7 +10,7 @@ import uploadRoutes from "./routes/upload.js";
 import roomRoutes from "./routes/rooms.js";
 import cors from "cors";
 import 'dotenv/config'
-
+const app = express();
 //middleware
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
@@ -20,7 +18,11 @@ app.use((req, res, next) => {
     });
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    {
+        origin: "http://localhost:5173"
+    }
+));
 app.use(cookieParser())
 app.use(express.static('public'))
 

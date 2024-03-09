@@ -35,7 +35,7 @@ export default function TransactionListItem(props) {
             <p>Stock After: {props.transaction.stockafter}</p>
             <p>Transactor: {props.transaction.transactorName}</p>
             <p>Timestamp: {props.transaction.timestamp.slice(0, -5).replace('T', ' | ')}</p>
-            {props.transaction.transactionfile && <HStack><Text>Transaction File:</Text><Link href={`${import.meta.env.VITE_FRONTEND_URL}/fileuploads/${props.transaction.transactionfile}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
+            {props.transaction.transactionfile && <HStack><Text>Transaction File:</Text><Link href={`${import.meta.env.VITE_BACKEND_STATIC_URL}/fileuploads/${props.transaction.transactionfile}`} ml={4} color={"gray.600"} alignItems={"center"} display={"flex"} isExternal>
           {props.transaction.transactionfile.slice(13)}<FaRegFile />
         </Link>
         </HStack>}

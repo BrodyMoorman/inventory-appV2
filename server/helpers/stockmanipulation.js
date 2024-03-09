@@ -1,4 +1,4 @@
-import e from "express";
+
 import { db } from "../connect.js"
 
 export const manipulatePartStock = (partid, quantity, add) => {

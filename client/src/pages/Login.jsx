@@ -59,11 +59,19 @@ export default function Login() {
     }
   }
   useEffect(() => {
-    if(isAuthenticated) {
-      navigate('/parts')
+    if(isAuthenticated()) {
+      window.location.href = '/parts'
+  }
+  const keyDownHandler = (e) => {
+    if(e.key === "Enter" && e.shiftKey === false) {
+      handleSubmit(e)
     }
   }
+  document.addEventListener('keydown', keyDownHandler)
+
+}
   ,[])
+  
 
   return (
     <Flex
@@ -96,7 +104,6 @@ export default function Login() {
                 direction={{ base: 'column', sm: 'row' }}
                 align={'start'}
                 justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
                 <Text color={'blue.400'}>Forgot password?</Text>
               </Stack>
               {err && <Text color={'red'}>{err}</Text>}

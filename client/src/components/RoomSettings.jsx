@@ -1,6 +1,6 @@
 import { HStack, VStack, Text, Button, Modal, ModalContent, ModalHeader,
      ModalBody, ModalFooter, useDisclosure, ModalOverlay, ModalCloseButton,
-    FormControl, FormLabel, Input, FormErrorMessage, useToast,  } from '@chakra-ui/react'
+    FormControl, FormLabel, Input, FormErrorMessage, useToast, useMediaQuery  } from '@chakra-ui/react'
 
 import React from 'react'
 import { useState } from 'react';
@@ -14,6 +14,7 @@ export default function RoomsSettings() {
 
 
     const toast = useToast()
+    const [isOnMobile] = useMediaQuery('(max-width: 600px)')
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [input, setInput] = useState('')
@@ -75,8 +76,12 @@ export default function RoomsSettings() {
 
     }
   return (
+    <>
+    {isOnMobile ?
+     <Text fontSize='2xl' fontWeight='semibold' color={"gray.500"} mb={4} textAlign={"center"}>Room customization only available on desktop</Text>
+    :
     <VStack>
-        <HStack>
+        <HStack  flexDirection={["column", "row"]}>
             {data.map((room, index) => {
               return(
                 <RoomListItem key={index} room={room} />
@@ -106,6 +111,8 @@ export default function RoomsSettings() {
         </ModalContent>
       </Modal>
 
-    </VStack>
+    </VStack>}
+    
+    </>
   )
 }

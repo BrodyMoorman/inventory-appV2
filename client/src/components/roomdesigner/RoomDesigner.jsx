@@ -51,7 +51,7 @@ export default function RoomDesigner() {
         setCount(count + 1)
         const newShelf = {...shelf}
         newShelf.id = count
-        newShelf.shelfName = "Shelve " + count
+        newShelf.shelfName = "Shelf " + count
         setShelves([...shelves, newShelf])
     }
     const deleteShelf = (shelf) => {

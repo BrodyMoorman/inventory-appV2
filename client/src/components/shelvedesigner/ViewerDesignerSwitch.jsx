@@ -1,6 +1,6 @@
 import React from 'react'
 import ShelveDesigner from './ShelveDesigner'
-import ShelveViewer from '../shelveviewer/shelveviewer';
+import ShelveViewer from '../shelveviewer/ShelveViewer'
 import { useQuery } from 'react-query';
 import { makeRequest } from '../../axios';
 import { useState } from 'react';
@@ -48,7 +48,7 @@ export default function ViewerDesignerSwitch(props) {
     
   return (
     <div>
-      {data == "No data" ? <ShelveDesigner rows={rows} /> : <ShelveViewer aspectRatio={props.aspectRatio} handleUpdate={handleUpdate} rows={data} />}
+      {data == "No data" ? <ShelveDesigner shelfId={props.shevlveId} rows={rows} /> : <ShelveViewer aspectRatio={props.aspectRatio} handleUpdate={handleUpdate} rows={data} />}
     </div>
   )
 }
