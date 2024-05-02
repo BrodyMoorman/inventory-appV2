@@ -43,6 +43,7 @@ import {
   AiOutlineDashboard,
 } from 'react-icons/ai'
 import { IconType } from 'react-icons'
+import { BsBoxSeam } from "react-icons/bs";
 import PartList from './PartList'
 import Parts from '../pages/Parts'
 import { useSignOut } from 'react-auth-kit'
@@ -72,9 +73,11 @@ interface SidebarProps extends BoxProps {
 const LinkItems: Array<LinkItemProps> = [
   // { name: 'Dashboard', link: "/", icon: AiOutlineDashboard },
   { name: 'Parts', link: "/parts", icon: BiWrench },
+  { name: 'Vendors', link: "/vendors", icon: BsBoxSeam },
   { name: 'Jobs', link: "/jobs", icon: CgSmartHomeWashMachine },
   { name: 'Team',link: "/team", icon: AiOutlineTeam },
   { name: 'Settings', link: "/settings", icon: FiSettings },
+  
 ]
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -118,7 +121,7 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: 'cyan.400',
+          bg: 'blue.400',
           color: 'white',
         }}
         {...rest}>

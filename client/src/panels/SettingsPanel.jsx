@@ -10,6 +10,18 @@ export default function SettingsPanel() {
         
         <VStack>
         <Flex w="90%" p="20px" bg="white" borderRadius="2xl" shadow="lg" m="20px" flexDirection="column" >
+            <Text fontSize="2xl" fontWeight="semibold">Parts</Text>
+            <VStack>
+                <Text fontSize="xl">Cost Analysis</Text>
+                <RoomsSettings />
+                
+
+            </VStack>
+            
+
+
+        </Flex>
+        <Flex w="90%" p="20px" bg="white" borderRadius="2xl" shadow="lg" m="20px" flexDirection="column" >
             <Text fontSize="2xl" fontWeight="semibold">Storage</Text>
             <VStack>
                 <Text fontSize="xl">Rooms</Text>
@@ -29,9 +41,11 @@ export default function SettingsPanel() {
 
             </VStack>
             
+            
 
 
         </Flex>
+        
         </VStack>
         <VStack>
 

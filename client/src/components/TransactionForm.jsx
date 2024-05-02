@@ -126,6 +126,13 @@ try{
                 setValues(prev=>({...prev, add: false}))
             }
         }
+        const handleIncrement = () => {
+            setValues(prev=>({...prev, transactionAmount: parseInt(prev.transactionAmount) + 1}))
+        }
+        const handleDecrement = () => {
+            if(values.transactionAmount === 1) return
+            setValues(prev=>({...prev, transactionAmount: parseInt(prev.transactionAmount) - 1}))
+        }
         
   return (
     <Box>
@@ -137,11 +144,11 @@ try{
                 <Box w="50%">
                 <FormControl isRequired>
                   <FormLabel>Transaction Amount</FormLabel>
-                  <NumberInput  min={1} defaultValue={1}>
-                    <NumberInputField name='transactionAmount' onChange={handleChange}  />
+                  <NumberInput value={values.transactionAmount}   min={1} defaultValue={1}>
+                    <NumberInputField onChange={handleChange} name='transactionAmount'   />
                     <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
+                        <NumberIncrementStepper onClick={handleIncrement} />
+                        <NumberDecrementStepper onClick={handleDecrement} />
                     </NumberInputStepper>
                     </NumberInput>
                 </FormControl>

@@ -29,17 +29,23 @@ export default function Login() {
   const isAuthenticated = useIsAuthenticated()
 
 
-  
+  const callsubmit = (e) => {
+
+    handleSubmit(e)
+  }
 
 
   const handleChange = (e) => {
     setValues(prev=>({...prev, [e.target.name]: e.target.value}))
+    console.log(values)
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+
     try{
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, values, {
+      const data = values
+      console.log(data)
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, data, {
         withCredentials: true,
       })
       signIn({
@@ -58,16 +64,22 @@ export default function Login() {
       setErr(err.response.data.message)
     }
   }
+  const keyDownHandler = (e) => {
+    e.preventDefault()
+    if(e.key === "Enter" && e.shiftKey === false) {
+      callsubmit()
+    }
+  }
   useEffect(() => {
     if(isAuthenticated()) {
       window.location.href = '/parts'
   }
-  const keyDownHandler = (e) => {
-    if(e.key === "Enter" && e.shiftKey === false) {
-      handleSubmit(e)
+
+  document.addEventListener('keyup', keyDownHandler)
+
+    return () => {
+      document.removeEventListener('keyup', keyDownHandler)
     }
-  }
-  document.addEventListener('keydown', keyDownHandler)
 
 }
   ,[])

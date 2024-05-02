@@ -20,7 +20,7 @@ export default function PartList(props) {
     <Tbody>
       {props.data.map((part) => {
         return (
-          <PartListItem partNo={part.idparts} name={part.partname} location={part.location} stock={part.count} cost={part.cost} partid={part.idparts}/>
+          <PartListItem key={part.idparts} partNo={part.idparts} name={part.partname} location={part.location} stock={part.count} cost={part.cost} partid={part.idparts}/>
         )
       })}   
     </Tbody>

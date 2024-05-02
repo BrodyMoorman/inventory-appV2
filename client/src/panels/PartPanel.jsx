@@ -1,5 +1,8 @@
 import React from 'react'
-import { Flex, Input, useMediaQuery, Heading, Grid, GridItem , Text,  VStack, Link, HStack, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure,} from '@chakra-ui/react'
+import { Flex, Input, useMediaQuery, Heading, Grid, GridItem , Text,  VStack, Link,
+   HStack, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
+    ModalBody, ModalFooter, useDisclosure, Accordion, AccordionItem, AccordionButton,
+     AccordionPanel, AccordionIcon, Box} from '@chakra-ui/react'
 import {ArrowForwardIcon} from '@chakra-ui/icons'
 import TransactionList from '../components/TransactionList'
 import { useQuery } from 'react-query'
@@ -9,6 +12,9 @@ import { useToast } from '@chakra-ui/react'
 import { ExternalLinkIcon, ArrowBackIcon } from '@chakra-ui/icons'
 import RoomViewer from '../components/roomviewer/RoomViewer'
 import ViewerDesignerSwitch from '../components/shelvedesigner/ViewerDesignerSwitch'
+import {AddIcon, MinusIcon } from '@chakra-ui/icons'
+import VendorListOnPartPage from '../components/VendorListOnPartPage'
+import AddVendorPartModal from '../components/AddVendorPartModal'
 
 export default function PartPanel(props) {
   const [isMobile] = useMediaQuery('(max-width: 600px)')
@@ -48,9 +54,19 @@ export default function PartPanel(props) {
       gap={3}
     >
   <GridItem my={[3 , 0]} rowSpan={1} colSpan={5} boxShadow='lg' bg="white" rounded={"2xl"} p='10px'  >
+    <HStack justifyContent={"space-between"}>
+    <VStack alignItems={"flex-start"} gap={-1}>
     <Heading fontSize={"5xl"}>{data.partname}</Heading>
     <Text fontSize={"3xl"}>Part No. {data.idparts}</Text>
     <Text fontSize={"3xl"}>{data.binid ? data.roomname +", " +  data.shelvename+ ", " + data.binname : "Location not assigned"}</Text>
+    </VStack>
+    <VStack p={2} borderRadius={"md"} border={"2px"} color={"white"} bg={"blue.400"}>
+      <Text fontWeight={"semibold"} mb={-2}>Quick Access</Text>
+    <VStack p={2} borderRadius={"md"} bg={"blue.600"}>
+    <img  src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${import.meta.env.VITE_FRONTEND_URL}/parts/${props.id}`}></img>
+    </VStack>
+    </VStack>
+    </HStack>
   </GridItem>
   <GridItem my={[3 , 0]} colSpan={2}   display={"flex"} justifyContent={"flex-start"} alignItems={"center"} flexDir={"column"} boxShadow='lg' bg="white" rounded={"2xl"} p='10px' >
   <Heading fontSize={"5xl"}>Stock: {data.count} </Heading>
@@ -73,23 +89,22 @@ export default function PartPanel(props) {
     
     <TransactionList partid={props.id} />
   </GridItem>
-  <GridItem my={[3 , 0]} colSpan={2} rowSpan={1}  padding={"10px"} display={'flex'} justifyContent={"flex-end"} flexDir={"column"} alignItems={"flex-end"} boxShadow='lg' bg="white" rounded={"2xl"} p='10px'  > 
+  <GridItem my={[3 , 0]} colSpan={2} rowSpan={2}  padding={"10px"} display={'flex'} justifyContent={"flex-start"} flexDir={"column"} alignItems={"flex-end"} boxShadow='lg' bg="white" rounded={"2xl"} p='10px'  > 
     
   <HStack justifyContent={"flex-start"} alignItems={"flex-start"} w={"100%"}><Heading>Item Details</Heading></HStack>
-    <VStack alignItems={"flex-end"} gap={"-10px"}>
-    <Text fontSize={"3xl"}>Cost: ${data.cost}</Text>
-    <Text fontSize={"3xl"}>Supplier: {data.vendor}</Text>
-    <Text fontSize={"3xl"}>Supplier Part No. {data.vendorpartno}</Text>
-    <Link href='https://google.com' isExternal>
-      Resuply Link <ExternalLinkIcon mx='2px' />
-    </Link>
-
+    <VStack alignItems={"flex-start"} gap={"-10px"} w={"full"}>
+    <Text fontSize={"xl"}>Manufacturer: {data.manufacturer}</Text>
+    <Text fontSize={"xl"}>MFG P/N: {data.mfgno}</Text>
+    <HStack justifyContent={"flex-start"} alignItems={"flex-start"} w={"100%"}><Heading fontSize={"2xl"}>Vendors</Heading></HStack>
+  <VStack w={"full"} overflowY={"auto"} h={"250px"} pt={2} px={1}>
+  <VendorListOnPartPage partid={props.id} />
+</VStack >
+  <AddVendorPartModal partid={props.id} />
     </VStack>
   </GridItem>
-  <GridItem colSpan={2} rowSpan={1}  padding={"10px"} display={'flex'} justifyContent={"flex-end"} flexDir={"column"} alignItems={"flex-end"} boxShadow='lg' bg="white" rounded={"2xl"} p='10px'  >
-  <HStack justifyContent={"flex-start"} alignItems={"flex-start"} w={"100%"}><Heading>Quick Access</Heading></HStack>
-  <img  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${import.meta.env.VITE_FRONTEND_URL}/parts/${props.id}`}></img>
-  </GridItem>
+  
+
+
 </Grid>
 {data.idrooms &&
 <VStack boxShadow={"xl"} p={2} bg={"white"} w={"full"} borderRadius={"2xl"}>

@@ -26,7 +26,7 @@ export default function TeamPanel() {
     }
   return (
     <HStack w={"full"} h={"full"} bg={"gray.100"} justifyContent={"center"}>
-    <VStack w={"60%"} bg={"white"} borderRadius={"2xl"}>
+    <VStack w={"60%"} bg={"white"} p={4} borderRadius={"2xl"}>
         <Text fontSize={"4xl"} fontWeight={"semibold"}>Team</Text>
         <HStack w={"full"} justifyContent={'center'}>
         <Input placeholder='Search' onChange={handleChange} maxW={'400px'} m={2} minH={'35px'}  />

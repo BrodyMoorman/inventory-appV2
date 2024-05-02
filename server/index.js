@@ -8,6 +8,7 @@ import templatesRoutes from "./routes/templates.js";
 import cookieParser from "cookie-parser";
 import uploadRoutes from "./routes/upload.js";
 import roomRoutes from "./routes/rooms.js";
+import vendorRoutes from "./routes/vendors.js";
 import cors from "cors";
 import 'dotenv/config'
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/jobs", jobsRoutes);
 app.use("/api/templates", templatesRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/vendors", vendorRoutes);
 
 
 app.listen(8800, () => {

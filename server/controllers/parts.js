@@ -58,7 +58,7 @@ export const createPart = (req, res) => {
     jwt.verify(token, process.env.TOKEN_SECRET, (err, userInfo) => {
         if(err) return res.status(403).json({ message: "Invalid token!" });
         if(userInfo.permission < 3) return res.status(403).json({ message: "You do not have permission to do this" });
-        const q = "INSERT INTO parts (`partname`,`count`,`cost`,`vendor`,`vendorpartno`,`location`,`restocklink`) VALUES (?)";
+        const q = "INSERT INTO parts (`partname`,`count`,`cost`,`manufacturer`,`mfgno`,`location`,`restocklink`) VALUES (?)";
         const location = 'Unassigned'
         const values = [req.body.partName, req.body.startingStock, req.body.cost, req.body.vendorName, req.body.mfgNo, location, req.body.restockLink];
         db.query(q, [values], (err, data) => {
