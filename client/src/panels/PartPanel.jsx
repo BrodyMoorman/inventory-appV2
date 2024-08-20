@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, Input, useMediaQuery, Heading, Grid, GridItem , Text,  VStack, Link,
    HStack, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
     ModalBody, ModalFooter, useDisclosure, Accordion, AccordionItem, AccordionButton,
-     AccordionPanel, AccordionIcon, Box} from '@chakra-ui/react'
+     AccordionPanel, AccordionIcon, Box, Fade} from '@chakra-ui/react'
 import {ArrowForwardIcon} from '@chakra-ui/icons'
 import TransactionList from '../components/TransactionList'
 import { useQuery } from 'react-query'
@@ -60,12 +60,14 @@ export default function PartPanel(props) {
     <Text fontSize={"3xl"}>Part No. {data.idparts}</Text>
     <Text fontSize={"3xl"}>{data.binid ? data.roomname +", " +  data.shelvename+ ", " + data.binname : "Location not assigned"}</Text>
     </VStack>
-    <VStack p={2} borderRadius={"md"} border={"2px"} color={"white"} bg={"blue.400"}>
+    <Fade in={true} delay={0.1} >
+    <VStack p={2} borderRadius={"md"} border={"2px"} color={"white"} bg={"blue.400"} >
       <Text fontWeight={"semibold"} mb={-2}>Quick Access</Text>
     <VStack p={2} borderRadius={"md"} bg={"blue.600"}>
     <img  src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${import.meta.env.VITE_FRONTEND_URL}/parts/${props.id}`}></img>
     </VStack>
     </VStack>
+    </Fade>
     </HStack>
   </GridItem>
   <GridItem my={[3 , 0]} colSpan={2}   display={"flex"} justifyContent={"flex-start"} alignItems={"center"} flexDir={"column"} boxShadow='lg' bg="white" rounded={"2xl"} p='10px' >

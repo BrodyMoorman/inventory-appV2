@@ -17,7 +17,7 @@ if (error) console.log(error)
 return (
     <Accordion gap={4} w={"full"}>
       {data && data.map((vendor) => (
-        <VendorListItemForPartPage key={vendor.idvendors} vendor={vendor} />
+        <VendorListItemForPartPage key={vendor.vendorid} vendor={vendor} />
       ))}
   
 

@@ -60,6 +60,7 @@ export default function TransactionList(props) {
         {data.toReversed().map((item) => {
             return (
                 <TransactionListItem
+                    key={item.transactionid}
                     transaction = {item}
                 />
             )

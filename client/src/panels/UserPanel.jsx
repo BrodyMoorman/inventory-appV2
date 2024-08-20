@@ -20,7 +20,7 @@ export default function UserPanel(props) {
     if (error) console.log(error)
   return (
     <Flex w={"100%"} h={"100%"} justifyContent={"center"} alignItems={"center"}>
-    <VStack bg={'white'} w={"80%"}  borderRadius={"xl"} boxShadow={"xl"}>
+    <VStack bg={'white'} w={["95%", "80%"]}  borderRadius={"xl"} boxShadow={"xl"}>
         <VStack w={'full'}>
           <HStack w={"full"} p={2}  justifyContent={"center"} >
             <VStack justifyContent={"center"} alignItems={"center"}>

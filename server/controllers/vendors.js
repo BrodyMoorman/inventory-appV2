@@ -23,11 +23,35 @@ export const getVendors = async (req, res) => {
     })
 }
 
+// export const getVendor = async (req, res) => {
+//     const q = "SELECT * FROM vendors WHERE idvendors = ?";
+//     db.query(q, [req.params.id], (err, data) => {
+//         if(err) return res.status(500).json(err);
+//         return res.status(200).json(data[0]);
+//     })
+// }
 export const getVendor = async (req, res) => {
-    const q = "SELECT * FROM vendors WHERE idvendors = ?";
+    const q = `SELECT
+    v.*,
+    JSON_ARRAYAGG(
+        JSON_OBJECT(
+            'idpartstovendor', ptv.idpartstovendor,
+            'partid', ptv.partid,
+            'vendorpn', ptv.vendorpn,
+            'cost', ptv.cost,
+            'vendorpartlink', ptv.vendorpartlink,
+            'partname', p.partname
+        )
+    ) as parts
+     FROM vendors v
+     LEFT JOIN partstovendor ptv ON v.idvendors = ptv.vendorid
+     LEFT JOIN parts p ON ptv.partid = p.idparts
+     WHERE v.idvendors = ?
+     GROUP BY v.idvendors`;
+     
     db.query(q, [req.params.id], (err, data) => {
         if(err) return res.status(500).json(err);
-        return res.status(200).json(data);
+        return res.status(200).json(data[0]);
     })
 }
 
@@ -52,5 +76,56 @@ export const getVendorsForPart = async (req, res) => {
     db.query(q, [req.params.partid], (err, data) => {
         if(err) return res.status(500).json(err);
         return res.status(200).json(data);
+    })
+}
+
+export const deletePartFromVendor = async (req, res) => {
+    const q = "DELETE FROM partstovendor WHERE idpartstovendor = ?";
+    db.query(q, [req.params.idpartstovendor], (err, data) => {
+        if(err) return res.status(500).json(err);
+        return res.status(200).json({ message: "Part deleted from vendor successfully" });
+    })
+}
+
+export const deleteVendor = async (req, res) => {
+    const vendorId = req.params.id;
+    const deletePartsQuery = "DELETE FROM partstovendor WHERE vendorid = ?";
+    const deleteVendorQuery = "DELETE FROM vendors WHERE idvendors = ?";
+
+    db.beginTransaction(err => {
+        if (err) return res.status(500).json(err);
+
+        db.query(deletePartsQuery, [vendorId], (err, data) => {
+            if (err) {
+                return db.rollback(() => {
+                    res.status(500).json(err);
+                });
+            }
+
+            db.query(deleteVendorQuery, [vendorId], (err, data) => {
+                if (err) {
+                    return db.rollback(() => {
+                        res.status(500).json(err);
+                    });
+                }
+
+                db.commit(err => {
+                    if (err) {
+                        return db.rollback(() => {
+                            res.status(500).json(err);
+                        });
+                    }
+                    return res.status(200).json({ message: "Vendor and associated parts deleted successfully" });
+                });
+            });
+        });
+    });
+}
+
+export const updateVendor = async (req, res) => {
+    const q = "UPDATE vendors SET vendorname = ?, vendorlink = ?, phonenumber = ?, email = ?, streetaddress = ?, city = ?, state = ?, zip = ? WHERE idvendors = ?";
+    db.query(q, [req.body.name, req.body.website, req.body.phone, req.body.email, req.body.streetAddress, req.body.city, req.body.state, req.body.zip, req.params.id], (err, data) => {
+        if(err) return res.status(500).json(err);
+        return res.status(200).json({ message: "Vendor updated successfully" });
     })
 }
