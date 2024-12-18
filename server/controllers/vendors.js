@@ -124,7 +124,7 @@ export const deleteVendor = async (req, res) => {
 
 export const updateVendor = async (req, res) => {
     const q = "UPDATE vendors SET vendorname = ?, vendorlink = ?, phonenumber = ?, email = ?, streetaddress = ?, city = ?, state = ?, zip = ? WHERE idvendors = ?";
-    db.query(q, [req.body.name, req.body.website, req.body.phone, req.body.email, req.body.streetAddress, req.body.city, req.body.state, req.body.zip, req.params.id], (err, data) => {
+    db.query(q, [req.body.vendorname, req.body.vendorlink, req.body.phonenumber, req.body.email, req.body.streetaddress, req.body.city, req.body.state, req.body.zip, req.params.id], (err, data) => {
         if(err) return res.status(500).json(err);
         return res.status(200).json({ message: "Vendor updated successfully" });
     })

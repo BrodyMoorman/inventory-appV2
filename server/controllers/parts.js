@@ -68,15 +68,15 @@ export const createPart = (req, res) => {
     )})
 }
 export const getPartListLength = (req, res) => {
-    const q = "SELECT COUNT(*) as count FROM parts WHERE partname or idparts LIKE ?";
+    const q = "SELECT COUNT(*) as count FROM parts WHERE partname LIKE ?";
     const q2 = "SELECT COUNT(*) as count FROM parts WHERE idparts LIKE ?";
-    if(req.query.searchingPartNo) {
+    if(req.query.searchingPartNo==="true") {
         db.query(q2, [req.query.partNoSearch+"%"], (err, data) => {
             if(err) return res.status(500).json(err);
             return res.status(200).json(data[0]);
         })
     } else {
-    db.query(q, ["%"+req.query.search + "%"], (err, data) => {
+    db.query(q, ["%"+ req.query.search + "%"], (err, data) => {
         if(err) return res.status(500).json(err);
         return res.status(200).json(data[0]);
     })

@@ -18,6 +18,7 @@ import Team from './pages/Team'
 import LandingPage from './pages/LandingPage'
 import Vendors from './pages/Vendors'
 import Vendor from './pages/Vendor'
+import Requests from './pages/Requests'
 
 import { RequireAuth } from 'react-auth-kit'
 import { Route, Routes } from 'react-router-dom'
@@ -47,6 +48,7 @@ function App() {
       <Route path="/team" element={<RequireAuth loginPath='/login'><Team /></RequireAuth>} />
       <Route path="/vendors" element={<RequireAuth loginPath='/login'><Vendors /></RequireAuth>} />
       <Route path="/vendors/:vendorid" element={<RequireAuth loginPath='/login'><Vendor /></RequireAuth>} />
+      <Route path="/requests" element={<RequireAuth loginPath='/login'><Requests/></RequireAuth>} />
       
 
       

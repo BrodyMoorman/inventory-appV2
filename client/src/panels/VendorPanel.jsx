@@ -6,6 +6,7 @@ import { VStack, Link, Text, HStack, IconButton, Icon, Menu, MenuButton, MenuLis
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import VendorProductCard from '../components/VendorProductCard';
+import EditVendorForm from '../components/EditVendorForm';
 
 export default function VendorPanel() {
   
@@ -36,7 +37,7 @@ export default function VendorPanel() {
         <Menu>
             <MenuButton variant={'outline'} as={IconButton} icon={<Icon as={BsThreeDotsVertical} fontSize={"xl"} color={"gray.500"}/>} px={0}> </MenuButton>
             <MenuList>
-                <MenuItem onClick={onOpen}>Change Vendor Info</MenuItem>
+                <MenuItem onClick={onOpen}><EditVendorForm vendor={data}></EditVendorForm></MenuItem>
                 <MenuDivider/>
                 <MenuItem onClick={handleDelete} color={"red.300"}>Delete Vendor</MenuItem>
             </MenuList>

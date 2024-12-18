@@ -30,7 +30,7 @@ export default function JobMembersList(props) {
     <Flex w={"full"} h={"220px"} overflowY={"auto"} flexDirection={"column"}>
         {props.members.map((member, index) => {
             return(
-                <Flex w={"full"} minH={"50px"} justifyContent={"space-between"} alignItems={"center"} px={2} borderBottom={"1px"} borderColor={"gray.200"}>
+                <Flex key={member.idusers} w={"full"} minH={"50px"} justifyContent={"space-between"} alignItems={"center"} px={2} borderBottom={"1px"} borderColor={"gray.200"}>
                     <Flex gap={1} alignItems={"center"}><Avatar size={"sm"} src={member.userImg} name={member.userName}/><Text>{member.userName}</Text></Flex>
                     <Text>{index == 0 ? "Creator" : "Member"}</Text>
                 </Flex>)}

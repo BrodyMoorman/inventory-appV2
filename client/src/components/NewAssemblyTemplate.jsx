@@ -8,6 +8,7 @@ import PartSearchWithResults from './PartSearchWithResults'
 import PartCardWithCount from './PartCardWithCount'
 import { Await } from 'react-router-dom'
 import axios from 'axios'
+import EditorModal from './instructiondesigner/EditorModal'
 
 
 
@@ -158,6 +159,7 @@ export default function NewAssemblyTemplate() {
                             }} />
 
                 </Box>}
+                <EditorModal />
                 <PartSearchWithResults parentCallback={handleCallback} />
                     {selectedParts.map((part, index) => {
                         return (

@@ -44,6 +44,8 @@ import {
 } from 'react-icons/ai'
 import { IconType } from 'react-icons'
 import { BsBoxSeam } from "react-icons/bs";
+import { BsCartPlus } from "react-icons/bs";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
 import PartList from './PartList'
 import Parts from '../pages/Parts'
 import { useSignOut } from 'react-auth-kit'
@@ -75,6 +77,8 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Parts', link: "/parts", icon: BiWrench },
   { name: 'Vendors', link: "/vendors", icon: BsBoxSeam },
   { name: 'Jobs', link: "/jobs", icon: CgSmartHomeWashMachine },
+  { name: 'Orders', link: "/orders", icon: LiaFileInvoiceSolid },
+  {name: 'Requests', link: "/requests", icon: BsCartPlus},
   { name: 'Team',link: "/team", icon: AiOutlineTeam },
   { name: 'Settings', link: "/settings", icon: FiSettings },
   

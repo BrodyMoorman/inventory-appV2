@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody, Button } from "@chakra-ui/react"
 import PartListItem from './PartListItem'
 export default function PartList(props) {
-  console.log(props.data)
+
   return (
     <TableContainer w={"full"}  overflowY={'auto'}   >
     
